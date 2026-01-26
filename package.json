@@ -2,10 +2,10 @@
   "name": "package-migration-assistant",
   "displayName": "Package Migration Assistant",
   "description": "Helps developers migrate code by suggesting package equivalents in a target language using Gemini AI.",
-  "publisher": "packagepal",
+  "publisher": "Sagar Kashyap",
   "repository": {
     "type": "git",
-    "url": "https://github.com/username/package-migration-assistant"
+    "url": "https://github.com/sagar-kashyap/PackagePal_Extension"
   },
   "version": "0.0.1",
   "engines": {
