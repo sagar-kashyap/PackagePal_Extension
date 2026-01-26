@@ -1,0 +1,82 @@
+{
+  "name": "package-migration-assistant",
+  "displayName": "Package Migration Assistant",
+  "description": "Helps developers migrate code by suggesting package equivalents in a target language using Gemini AI.",
+  "publisher": "packagepal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/username/package-migration-assistant"
+  },
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.setTargetLanguage",
+        "title": "Set Target Language"
+      },
+      {
+        "command": "extension.setSourceLanguage",
+        "title": "Set Source Language"
+      },
+      {
+        "command": "extension.setApiKey",
+        "title": "Set Gemini API Key"
+      },
+      {
+        "command": "extension.scanFile",
+        "title": "Scan File for Packages"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "package-migrator",
+          "title": "Package Migrator",
+          "icon": "$(rocket)"
+        }
+      ]
+    },
+    "views": {
+      "package-migrator": [
+        {
+          "id": "package-migrator.sidebar",
+          "name": "Discovered Packages"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "20.x",
+    "@types/vscode": "^1.85.0",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vscode/test-electron": "^2.3.8",
+    "eslint": "^8.56.0",
+    "glob": "^7.2.3",
+    "mocha": "^10.2.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1"
+  }
+}
