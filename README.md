@@ -1,6 +1,6 @@
-# Package Migration Assistant 🚀
+# PackagePal 🚀
 
-**Package Migration Assistant** is an AI-powered VS Code extension designed to help developers migrate codebases from one language to another (e.g., Node.js to Go, Python to Rust) by identifying package dependencies and finding their best equivalents in the target language.
+**PackagePal** is an AI-powered VS Code extension designed to help developers migrate codebases from one language to another (e.g., Node.js to Go, Python to Rust) by identifying package dependencies and finding their best equivalents in the target language.
 
 Powered by Google's **Gemini AI**, it provides accurate, context-aware suggestions, code snippets, and direct links to official documentation.
 
@@ -16,7 +16,7 @@ Simply hover over an import statement in your code (e.g., `import axios from 'ax
 The extension automatically detects the source language based on your active file (e.g., opening a `.py` file sets the Source to `Python`). You don't need to configure this manually every time you switch files.
 
 ### 3. 📂 Sidebar Explorer
-Open the **Package Migrator** view in the Activity Bar (Rocket icon) to see a comprehensive list of all packages discovered in your current file.
+Open the **PackagePal** view in the Activity Bar (Rocket icon) to see a comprehensive list of all packages discovered in your current file.
 - Click on any package to expand potential replacements.
 - View details like Description, Code Snippets, and Documentation links in a structured tree view.
 

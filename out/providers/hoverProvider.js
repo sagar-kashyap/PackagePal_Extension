@@ -12,7 +12,7 @@ class PackageHoverProvider {
         if (!range)
             return null;
         const line = document.lineAt(position).text;
-        const packageName = this.extractPackageName(line);
+        const packageName = this.extractPackageName(line, document.languageId);
         if (!packageName)
             return null;
         // Ensure we are hovering over the package name part
@@ -38,18 +38,51 @@ class PackageHoverProvider {
         });
         return new vscode.Hover(markdown);
     }
-    extractPackageName(line) {
-        // Regex for detecting imports
-        // 1. import ... from 'package' or "package"
-        const importMatch = line.match(/from\s+['"]([^'"]+)['"]/);
-        if (importMatch)
-            return importMatch[1];
-        // 2. require('package') or require("package")
-        const requireMatch = line.match(/require\s*\(\s*['"]([^'"]+)['"]\s*\)/);
-        if (requireMatch)
-            return requireMatch[1];
-        // 3. For Go: import "package/path" (if scanning Go files, but task says source is primarily Node-like, but extendable)
-        // User said "identifying packages in the source code (e.g., Node.js 'axios')"
+    extractPackageName(line, langId) {
+        let patterns = [];
+        switch (langId) {
+            case 'python':
+                patterns.push(/^(?:from|import)\s+([a-zA-Z0-9_]+)/);
+                break;
+            case 'go':
+                patterns.push(/import\s+(?:[a-zA-Z0-9_]+\s+)?['"]([^'"]+)['"]/);
+                patterns.push(/^\s*['"]([^'"]+)['"]/); // inside parens
+                break;
+            case 'rust':
+                patterns.push(/(?:use|extern\s+crate)\s+([a-zA-Z0-9_]+)/);
+                break;
+            case 'java':
+            case 'kotlin':
+                patterns.push(/import\s+([a-zA-Z0-9_.]+(?:\.[a-zA-Z0-9_]+)*)/);
+                break;
+            case 'csharp':
+                patterns.push(/using\s+([a-zA-Z0-9_.]+);/);
+                break;
+            case 'cpp':
+                patterns.push(/#include\s+[<"]([^>"]+)[>"]/);
+                break;
+            case 'ruby':
+                patterns.push(/require\s+['"]([^'"]+)['"]/);
+                patterns.push(/gem\s+['"]([^'"]+)['"]/);
+                break;
+            case 'php':
+                patterns.push(/use\s+([a-zA-Z0-9_\\]+);/);
+                break;
+            case 'swift':
+                patterns.push(/import\s+([a-zA-Z0-9_]+)/);
+                break;
+            default:
+                // JS/TS
+                patterns.push(/from\s+['"]([^'"]+)['"]/);
+                patterns.push(/require\s*\(\s*['"]([^'"]+)['"]\s*\)/);
+                break;
+        }
+        for (const pattern of patterns) {
+            const match = line.match(pattern);
+            if (match && match[1]) {
+                return match[1];
+            }
+        }
         return null;
     }
 }

@@ -10,7 +10,7 @@ class GeminiService {
     }
     async setApiKey(key) {
         await this.context.secrets.store(GeminiService.API_KEY_SECRET, key);
-        console.log('Package Migrator: API Key stored.');
+        console.log('PackagePal: API Key stored.');
     }
     async getApiKey() {
         return await this.context.secrets.get(GeminiService.API_KEY_SECRET);
@@ -18,12 +18,12 @@ class GeminiService {
     async getSuggestion(packageName, targetLanguage, sourceLanguage) {
         const cacheKey = `${packageName}->${sourceLanguage}->${targetLanguage}`;
         if (this.cache.has(cacheKey)) {
-            console.log(`Package Migrator: Cache hit for ${cacheKey}`);
+            console.log(`PackagePal: Cache hit for ${cacheKey}`);
             return this.cache.get(cacheKey);
         }
         const apiKey = await this.getApiKey();
         if (!apiKey) {
-            console.warn('Package Migrator: No API Key found.');
+            console.warn('PackagePal: No API Key found.');
             await this.promptForApiKey();
             // Try one more time after prompt, or just fail and let user retry
             const newKey = await this.getApiKey();
@@ -51,7 +51,7 @@ class GeminiService {
                 ...
             ]
             `;
-            console.log(`Package Migrator: Querying Gemini for ${packageName}...`);
+            console.log(`PackagePal: Querying Gemini for ${packageName}...`);
             const result = await model.generateContent(prompt);
             const response = await result.response;
             const text = response.text();
@@ -64,7 +64,7 @@ class GeminiService {
             return finalSuggestions;
         }
         catch (error) {
-            console.error('Package Migrator: API Error', error);
+            console.error('PackagePal: API Error', error);
             vscode.window.showErrorMessage(`Gemini API Error: ${error instanceof Error ? error.message : String(error)}`);
             return [];
         }

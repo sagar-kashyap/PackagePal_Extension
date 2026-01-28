@@ -22,7 +22,7 @@ class StatusBarManager {
         this.context.globalState.update(StatusBarManager.TARGET_LANG_KEY, target);
     }
     async selectTargetLanguage() {
-        const languages = ['Go', 'Python', 'Rust', 'Java', 'C++', 'C#', 'Ruby', 'PHP'];
+        const languages = ['Go', 'Python', 'Rust', 'Java', 'C++', 'C#', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'TypeScript'];
         const selected = await vscode.window.showQuickPick(languages, {
             placeHolder: 'Select TARGET language for migration suggestions'
         });
@@ -32,7 +32,7 @@ class StatusBarManager {
         }
     }
     async selectSourceLanguage() {
-        const languages = ['Node.js', 'Python', 'Java', 'Go', 'Ruby', 'PHP', 'Rust'];
+        const languages = ['Node.js', 'Python', 'Java', 'Go', 'Ruby', 'PHP', 'Rust', 'C++', 'C#', 'Swift', 'Kotlin'];
         const selected = await vscode.window.showQuickPick(languages, {
             placeHolder: 'Select SOURCE language of your current project'
         });

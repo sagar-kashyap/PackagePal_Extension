@@ -15,7 +15,7 @@ function activate(context) {
     // Initialize Providers
     const sidebarProvider = new sidebarProvider_1.PackageSidebarProvider(geminiService, statusBar);
     // Register Output Channel
-    const outputChannel = vscode.window.createOutputChannel('Package Migrator');
+    const outputChannel = vscode.window.createOutputChannel('PackagePal');
     context.subscriptions.push(outputChannel);
     // Register Commands
     const setTargetLangCmd = vscode.commands.registerCommand('extension.setTargetLanguage', () => {

@@ -36,18 +36,68 @@ class PackageSidebarProvider {
             }
         }
         else {
-            // Regex scan
-            const importRegex = /from\s+['"]([^'"]+)['"]/g;
-            const requireRegex = /require\s*\(\s*['"]([^'"]+)['"]\s*\)/g;
-            let match;
-            while ((match = importRegex.exec(text)) !== null) {
-                this.packages.push(match[1]);
+            // Regex scan based on language ID
+            const langId = doc.languageId;
+            let patterns = [];
+            switch (langId) {
+                case 'python':
+                    // import package, from package import ...
+                    patterns.push(/^(?:from|import)\s+([a-zA-Z0-9_]+)/gm);
+                    break;
+                case 'go':
+                    // import "package", import ( "package" )
+                    // Simplified for single line or formatted imports
+                    patterns.push(/import\s+(?:[a-zA-Z0-9_]+\s+)?['"]([^'"]+)['"]/g);
+                    patterns.push(/^\s*['"]([^'"]+)['"]/gm); // inside import ( ... ) block, heuristic
+                    break;
+                case 'rust':
+                    // use package::..., extern crate package
+                    patterns.push(/(?:use|extern\s+crate)\s+([a-zA-Z0-9_]+)/gm);
+                    // dependencies in Cargo.toml handled? No, that's a different file. Sidebar scans active file.
+                    break;
+                case 'java':
+                case 'kotlin':
+                    // import package.name
+                    patterns.push(/import\s+([a-zA-Z0-9_]+(?:\.[a-zA-Z0-9_]+)*)/gm);
+                    break;
+                case 'csharp':
+                    // using System; using Package;
+                    patterns.push(/using\s+([a-zA-Z0-9_.]+);/gm);
+                    break;
+                case 'cpp':
+                    // #include <library>
+                    patterns.push(/#include\s+[<"]([^>"]+)[>"]/gm);
+                    break;
+                case 'ruby':
+                    patterns.push(/require\s+['"]([^'"]+)['"]/gm);
+                    patterns.push(/gem\s+['"]([^'"]+)['"]/gm);
+                    break;
+                case 'php':
+                    patterns.push(/use\s+([a-zA-Z0-9_\\]+);/gm);
+                    break;
+                case 'swift':
+                    patterns.push(/import\s+([a-zA-Z0-9_]+)/gm);
+                    break;
+                default:
+                    // Default to JS/TS patterns for web files
+                    patterns.push(/from\s+['"]([^'"]+)['"]/g);
+                    patterns.push(/require\s*\(\s*['"]([^'"]+)['"]\s*\)/g);
+                    break;
             }
-            while ((match = requireRegex.exec(text)) !== null) {
-                this.packages.push(match[1]);
-            }
-            // Dedup
-            this.packages = [...new Set(this.packages)];
+            patterns.forEach(regex => {
+                let match;
+                while ((match = regex.exec(text)) !== null) {
+                    if (match[1]) {
+                        // For Java/Kotlin, we might just want the first part or full package
+                        // Usually top level like 'java.util' -> 'java' or full 'java.util.List'
+                        // Let's keep full string for accuracy in search
+                        this.packages.push(match[1]);
+                    }
+                }
+            });
+            // Clean up: filter out common keywords/system libs if possible, but for now just dedup
+            // Also for Go, remove quotes if captured inside
+            this.packages = [...new Set(this.packages)].filter(p => !p.startsWith('.'));
         }
     }
     getTreeItem(element) {

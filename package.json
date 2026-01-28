@@ -1,13 +1,15 @@
 {
-  "name": "package-migration-assistant",
-  "displayName": "Package Migration Assistant",
+  "name": "package-pal",
+  "displayName": "Package Pal",
   "description": "Helps developers migrate code by suggesting package equivalents in a target language using Gemini AI.",
-  "publisher": "Sagar Kashyap",
+  "publisher": "SagarKashyap",
   "repository": {
     "type": "git",
     "url": "https://github.com/sagar-kashyap/PackagePal_Extension"
   },
-  "version": "0.0.1",
+  "license": "MIT",
+  "icon": "icon.png",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -41,7 +43,7 @@
       "activitybar": [
         {
           "id": "package-migrator",
-          "title": "Package Migrator",
+          "title": "PackagePal",
           "icon": "$(rocket)"
         }
       ]
@@ -50,7 +52,8 @@
       "package-migrator": [
         {
           "id": "package-migrator.sidebar",
-          "name": "Discovered Packages"
+          "name": "Discovered Packages",
+          "icon": "$(package)"
         }
       ]
     }
