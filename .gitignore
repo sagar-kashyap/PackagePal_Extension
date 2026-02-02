@@ -1,7 +1,7 @@
-node_modules/
-out/
-.vscode-test/
+node_modules
+out
+.vscode-test
 *.vsix
 .DS_Store
-demo_files/
-.vscode/
+demo_files
+.vscode
