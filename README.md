@@ -50,6 +50,12 @@ Open the **PackagePal** view in the Activity Bar (Rocket icon) to see a comprehe
 
 ## 📝 Release Notes
 
+### 0.0.2
+- **Rebranding**: Renamed to **PackagePal**.
+- **Multi-Language Support**: Added detection for Python, Go, Rust, Java, C++, C#, Ruby, PHP, Swift, and Kotlin.
+- **License**: Added MIT License.
+- **UX**: Fixed extension icon configuration.
+
 ### 0.0.1
 - Initial release.
 - Support for detailed multi-option suggestions.

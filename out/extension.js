@@ -42,7 +42,22 @@ function activate(context) {
         vscode.window.showInformationMessage('Scanned active file for packages.');
     });
     // Register Providers
-    context.subscriptions.push(vscode.languages.registerHoverProvider([{ scheme: 'file', language: 'javascript' }, { scheme: 'file', language: 'typescript' }, { scheme: 'file', pattern: '**/package.json' }], new hoverProvider_1.PackageHoverProvider(geminiService, statusBar)));
+    const selector = [
+        { scheme: 'file', language: 'javascript' },
+        { scheme: 'file', language: 'typescript' },
+        { scheme: 'file', pattern: '**/package.json' },
+        { scheme: 'file', language: 'python' },
+        { scheme: 'file', language: 'go' },
+        { scheme: 'file', language: 'rust' },
+        { scheme: 'file', language: 'java' },
+        { scheme: 'file', language: 'kotlin' },
+        { scheme: 'file', language: 'csharp' },
+        { scheme: 'file', language: 'cpp' },
+        { scheme: 'file', language: 'ruby' },
+        { scheme: 'file', language: 'php' },
+        { scheme: 'file', language: 'swift' }
+    ];
+    context.subscriptions.push(vscode.languages.registerHoverProvider(selector, new hoverProvider_1.PackageHoverProvider(geminiService, statusBar)));
     context.subscriptions.push(vscode.window.registerTreeDataProvider('package-migrator.sidebar', sidebarProvider));
     context.subscriptions.push(setTargetLangCmd, setSourceLangCmd, setApiKeyCmd, scanFileCmd);
     // Listen on file switch to auto-refresh sidebar and update source language
@@ -52,6 +67,7 @@ function activate(context) {
     });
     // Initial check
     if (vscode.window.activeTextEditor) {
+        sidebarProvider.refresh();
         statusBar.updateSourceLanguageFromEditor(vscode.window.activeTextEditor);
     }
 }

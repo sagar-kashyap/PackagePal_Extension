@@ -48,9 +48,25 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     // Register Providers
+    const selector = [
+        { scheme: 'file', language: 'javascript' },
+        { scheme: 'file', language: 'typescript' },
+        { scheme: 'file', pattern: '**/package.json' },
+        { scheme: 'file', language: 'python' },
+        { scheme: 'file', language: 'go' },
+        { scheme: 'file', language: 'rust' },
+        { scheme: 'file', language: 'java' },
+        { scheme: 'file', language: 'kotlin' },
+        { scheme: 'file', language: 'csharp' },
+        { scheme: 'file', language: 'cpp' },
+        { scheme: 'file', language: 'ruby' },
+        { scheme: 'file', language: 'php' },
+        { scheme: 'file', language: 'swift' }
+    ];
+
     context.subscriptions.push(
         vscode.languages.registerHoverProvider(
-            [{ scheme: 'file', language: 'javascript' }, { scheme: 'file', language: 'typescript' }, { scheme: 'file', pattern: '**/package.json' }],
+            selector,
             new PackageHoverProvider(geminiService, statusBar)
         )
     );
@@ -69,6 +85,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // Initial check
     if (vscode.window.activeTextEditor) {
+        sidebarProvider.refresh();
         statusBar.updateSourceLanguageFromEditor(vscode.window.activeTextEditor);
     }
 }
