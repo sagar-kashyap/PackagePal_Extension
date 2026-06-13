@@ -4,6 +4,10 @@
 
 Powered by Google's **Gemini AI**, it provides accurate, context-aware suggestions, code snippets, and direct links to official documentation.
 
+## 🎬 Demo
+
+[![PackagePal Demo](https://img.youtube.com/vi/RlDwJ43qvLk/maxresdefault.jpg)](https://www.youtube.com/watch?v=RlDwJ43qvLk)
+
 ## ✨ Features
 
 ### 1. 🔍 Hover Suggestions
@@ -49,6 +53,13 @@ Open the **PackagePal** view in the Activity Bar (Rocket icon) to see a comprehe
 - Code snippets (package names only) are sent to the Gemini API solely for the purpose of finding suggestions. No other code is shared.
 
 ## 📝 Release Notes
+
+### 0.0.4
+- **Language Dropdowns**: Added `TypeScript` and `JavaScript` as selectable options in both the Source and Target language pickers.
+
+### 0.0.3
+- **Hover Fix**: Extended hover provider support to all 13 languages — previously only JavaScript, TypeScript, and `package.json` triggered hover suggestions. Now works on Python, Go, Rust, Java, Kotlin, C#, C++, Ruby, PHP, and Swift files too.
+- **Sidebar Auto-Refresh**: Sidebar now automatically scans and refreshes when a file is opened, without needing to run `Scan File for Packages` manually.
 
 ### 0.0.2
 - **Rebranding**: Renamed to **PackagePal**.
