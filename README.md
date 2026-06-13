@@ -6,7 +6,10 @@ Powered by Google's **Gemini AI**, it provides accurate, context-aware suggestio
 
 ## 🎬 Demo
 
-[![PackagePal Demo](https://img.youtube.com/vi/RlDwJ43qvLk/maxresdefault.jpg)](https://www.youtube.com/watch?v=RlDwJ43qvLk)
+<a href="https://www.youtube.com/watch?v=RlDwJ43qvLk">
+  <img src="demo.gif" alt="PackagePal Demo"/>
+</a>
+
 
 ## ✨ Features
 
